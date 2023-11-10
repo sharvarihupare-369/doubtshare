@@ -1,26 +1,28 @@
 const express = require("express");
-const connection = require("./db");
-const { userRouter } = require("./routes/userRouter");
 const app = express();
-require("dotenv").config()
-const cors = require("cors")
+const connection = require("./db");
+require("dotenv").config();
+const cors = require("cors");
+const { userRouter } = require("./routes/userRouter");
+const { doubtRouter } = require("./routes/doubtRouter");
 const port = process.env.PORT || 5000;
 
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 
-app.use('/api/auth',userRouter)
+app.use('/api/auth',userRouter);
+app.use('/api/doubts',doubtRouter);
 
 app.get("/",(req,res)=>{
-    res.send("Welcome to Home Page")
+    res.send("Welcome to Home Page");
 })
 
 app.listen(port,async()=>{
     try {
-        await connection
-        console.log("Connected to DB...")
+        await connection;
+        console.log("Connected to DB...");
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
-    console.log(`Server is listening on port ${port}`)
+    console.log(`Server is listening on port ${port}`);
 })

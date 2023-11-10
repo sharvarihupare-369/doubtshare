@@ -1,19 +1,20 @@
 const express = require("express");
 const UserModel = require("../models/userModel");
-const userRouter = express.Router()
+const userRouter = express.Router();
 require("dotenv").config();
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 const { validationMiddleware } = require("../middlewares/registerValidationmiddleware");
+const BlackListModel = require("../models/blackListModel");
 
 userRouter.post("/register",validationMiddleware,async(req,res)=>{
    try {
     const {password} = req.body;
-    const hashPassword = await bcrypt.hash(password,10)
-    let user = await UserModel.create({...req.body,password:hashPassword})
-    res.status(200).send({message:"User registered successfully",user})
+    const hashPassword = await bcrypt.hash(password,10);
+    let user = await UserModel.create({...req.body,password:hashPassword});
+    res.status(200).send({message:"User registered successfully",user});
    } catch (error) {
-    res.status(400).send({message:error.message})
+    res.status(400).send({message:error.message});
    }
 })
 
@@ -35,10 +36,23 @@ userRouter.post("/login",async(req,res)=>{
         }
 
     } catch (error) {
-        res.status(400).send({message:error.message})
+        res.status(400).send({message:error.message});
     }
 })
 
 
+userRouter.get("/logout",async(req,res)=>{
+    const token = req.headers.authorization?.split(" ")[1];
+    if(!token){
+        return res.status(400).send({message : "Access token not found!"});
+    }
+    try {
+        const blackListToken = await BlackListModel.create({token});
+        res.status(200).send({message:"User Logged Out"});
+    } catch (error) {
+        res.status(400).send({message:error.message});
+    }
+})
 
-module.exports = {userRouter}
+
+module.exports = {userRouter};
