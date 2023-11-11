@@ -31,3 +31,4 @@ const validationMiddleware = async(req,res,next) => {
 }
 
 module.exports = {validationMiddleware};
+
