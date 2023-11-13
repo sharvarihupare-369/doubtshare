@@ -25,12 +25,12 @@ app.use('/api/doubts',doubtRouter);
 app.use('/api/tutor',tutorRouter);
 
 app.get("/",(req,res)=>{
-    res.send("Welcome to Home Page");
-    // const options = {
-    //     root : path.join(__dirname)
-    //  }
-    //  const filename = 'index.html'
-    //  res.sendFile(filename,options)
+    // res.send("Welcome to Home Page");
+    const options = {
+        root : path.join(__dirname)
+     }
+     const filename = 'index.html'
+     res.sendFile(filename,options)
 })
 
 app.post('/trigger-cron',async(req,res)=>{
@@ -38,7 +38,7 @@ app.post('/trigger-cron',async(req,res)=>{
         const onlineTutorsCount = await TutorAvailabilityModel.countDocuments();
         console.log(`Number of online tutors : ${onlineTutorsCount}`)
 
-        // io.emit('cronJob',{onlineTutorsCount});
+        io.emit('cronJob',{onlineTutorsCount});
         res.status(200).send({message : 'Cron job triggered successfully'})
     } catch (error) {
         console.log('cron error',error.message)
@@ -63,8 +63,8 @@ const updateTutorsAvailability  = async() => {
 cron.schedule('* * * * * *', async() => {
     try {
         const onlineTutorsCount = await TutorAvailabilityModel.countDocuments();
-        console.log(`Number of online tutors : ${+onlineTutorsCount}`);
-        // io.emit('cronJob', {onlineTutorsCount});
+        console.log(`Number of online tutors : ${onlineTutorsCount}`);
+        io.emit('cronJob', onlineTutorsCount);
     } catch (error) {
         console.log('Cron Job Error',error.message)
     }

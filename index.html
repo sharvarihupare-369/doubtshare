@@ -13,7 +13,7 @@
         const socket  = io()
         socket.on('cronJob',(data)=>{
             console.log('CRON Job event received', data)
-            document.write(data.onlineTutorsCount)
+            document.write(data)
         })
     </script>
 </body>
