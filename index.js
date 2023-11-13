@@ -12,6 +12,7 @@ const TutorAvailabilityModel = require("./models/tutorAvailabilityModel");
 const port = process.env.PORT || 5000;
 const path = require("path");
 const TutorModel = require("./models/tutorModel");
+const { studentRouter } = require("./routes/studentRouter");
 
 const app = express();
 const server = http.Server(app);
@@ -23,6 +24,9 @@ app.use(express.json());
 app.use('/api/auth',userRouter);
 app.use('/api/doubts',doubtRouter);
 app.use('/api/tutor',tutorRouter);
+app.use('/api/student',studentRouter);
+
+
 
 app.get("/",(req,res)=>{
     // res.send("Welcome to Home Page");
