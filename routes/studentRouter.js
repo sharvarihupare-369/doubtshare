@@ -3,10 +3,10 @@ const studentRouter = express.Router();
 const { authMiddleware } = require("../middlewares/authMiddleware");
 const StudentModel = require("../models/studentModel");
 
-studentRouter.get("/", async (req, res) => {
+studentRouter.get("/", authMiddleware, async (req, res) => {
   try {
-    const allstudents = await StudentModel.find();
-    res.status(200).send(allstudents);
+    const student = await StudentModel.findOne({userId : req.userId});
+    res.status(200).send(student);
   } catch (error) {
     res.status(400).send({ message: error.message });
   }
