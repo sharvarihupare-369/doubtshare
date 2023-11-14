@@ -29,12 +29,12 @@ app.use('/api/student',studentRouter);
 
 
 app.get("/",(req,res)=>{
-    // res.send("Welcome to Home Page");
-    const options = {
-        root : path.join(__dirname)
-     }
-     const filename = 'index.html'
-     res.sendFile(filename,options)
+    res.send("Welcome to Home Page");
+    // const options = {
+    //     root : path.join(__dirname)
+    //  }
+    //  const filename = 'index.html'
+    //  res.sendFile(filename,options)
 })
 
 app.post('/trigger-cron',async(req,res)=>{
