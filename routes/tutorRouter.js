@@ -14,6 +14,15 @@ tutorRouter.get("/", async (req, res) => {
   }
 });
 
+tutorRouter.get("/gettutor",authMiddleware, async (req, res) => {
+    try {
+      const tutor = await TutorModel.findOne({userId : req.userId});
+      res.status(200).send(tutor);
+    } catch (error) {
+      res.status(400).send({ message: error.message });
+    }
+  });
+
 
 tutorRouter.post("/addData", authMiddleware, async (req, res) => {
   try {
