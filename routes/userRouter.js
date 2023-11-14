@@ -65,4 +65,13 @@ userRouter.get("/logout", async (req, res) => {
   }
 });
 
+userRouter.get("/users",async(req,res)=>{
+    try {
+        const user = await UserModel.find();
+        res.status(200).send(user)
+    } catch (error) {
+        res.status(400).send({ message: error.message });
+    }
+})
+
 module.exports = { userRouter };

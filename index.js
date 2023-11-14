@@ -50,18 +50,7 @@ app.post('/trigger-cron',async(req,res)=>{
     }
 })
 
-const updateTutorsAvailability  = async() => {
-    try {
-        const onlineTutorsCount = await TutorAvailabilityModel.countDocuments();
-        console.log(`Number of online tutors : ${+onlineTutorsCount}`);
-        // io.emit('cronJob', {onlineTutorsCount});
-    } catch (error) {
-        console.log('Cron Job Error',error.message)
-    }
-    console.log("cron run at : " + new Date())
-}
 
-// setInterval(updateTutorsAvailability,3000)
 
 
 cron.schedule('* * * * * *', async() => {
