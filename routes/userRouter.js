@@ -45,6 +45,7 @@ userRouter.post("/login", async (req, res) => {
           message: "User LoggedIn Successfully",
           token,
           name: user.username,
+          type:user.role
         });
     }
   } catch (error) {
